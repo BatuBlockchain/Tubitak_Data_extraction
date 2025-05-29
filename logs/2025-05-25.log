@@ -1,0 +1,203 @@
+2025-05-25 16:16:31,648 - INFO - Test veritabanı tabloları başarıyla oluşturuldu
+2025-05-25 16:16:31,649 - INFO - Test veritabanı başlatıldı
+2025-05-25 16:16:31,649 - INFO - 2025-01-16 tarihli veri işleme başlatıldı
+2025-05-25 16:16:31,649 - INFO - Ana klasör yolu: /Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/data
+2025-05-25 16:16:32,267 - INFO - 2025-01-16 dosyasından 113 veri çekildi
+2025-05-25 16:16:32,269 - INFO - Özellik çıkarma başlatıldı
+2025-05-25 16:16:36,737 - INFO - Toplam 120 özellik başarıyla çıkarıldı
+2025-05-25 16:16:36,738 - INFO - 2025-01-16 dosyasından özellikler çıkarıldı
+2025-05-25 16:16:36,746 - INFO - 120 özellik başarıyla işlendi
+2025-05-25 16:16:36,746 - INFO - Özellik listesi veritabanından alındı
+2025-05-25 16:16:36,999 - INFO - 113 döngü verisi formatlandı
+2025-05-25 16:16:37,035 - INFO - 113 döngü verisi başarıyla eklendi
+2025-05-25 16:16:37,035 - INFO - Veriler test veritabanına eklendi
+2025-05-25 16:16:37,035 - INFO - 2025-01-16 tarihli veri işleme başarıyla tamamlandı
+2025-05-25 16:21:02,765 - INFO - feature_list tablosu oluşturuldu
+2025-05-25 16:21:02,766 - INFO - feature_values tablosu oluşturuldu
+2025-05-25 16:21:02,766 - INFO - Test veritabanı başlatıldı
+2025-05-25 16:21:02,766 - INFO - 2025-01-16 tarihli veri işleme başlatıldı
+2025-05-25 16:21:02,766 - INFO - Ana klasör yolu: /Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/data
+2025-05-25 16:21:03,356 - INFO - 2025-01-16 dosyasından 113 veri çekildi
+2025-05-25 16:21:03,357 - INFO - Özellik çıkarma başlatıldı
+2025-05-25 16:21:07,725 - INFO - Toplam 120 özellik başarıyla çıkarıldı
+2025-05-25 16:21:07,726 - INFO - 2025-01-16 dosyasından özellikler çıkarıldı
+2025-05-25 16:21:07,726 - ERROR - Özellikler eklenirken hata oluştu
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 52, in insert_new_features
+    cursor.execute("INSERT INTO features (feature_name) VALUES (?)", (feature,))
+sqlite3.OperationalError: no such table: features
+2025-05-25 16:21:07,728 - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 52, in insert_new_features
+    cursor.execute("INSERT INTO features (feature_name) VALUES (?)", (feature,))
+sqlite3.OperationalError: no such table: features
+
+2025-05-25 16:21:07,728 - ERROR - Veri işleme sırasında hata oluştu
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/app.py", line 69, in <module>
+    feature_list_db = insert_new_features(features_list)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 52, in insert_new_features
+    cursor.execute("INSERT INTO features (feature_name) VALUES (?)", (feature,))
+sqlite3.OperationalError: no such table: features
+2025-05-25 16:22:03,149 - INFO - feature_list tablosu oluşturuldu
+2025-05-25 16:22:03,150 - INFO - feature_values tablosu oluşturuldu
+2025-05-25 16:22:03,150 - INFO - Test veritabanı başlatıldı
+2025-05-25 16:22:03,150 - INFO - 2025-01-16 tarihli veri işleme başlatıldı
+2025-05-25 16:22:03,150 - INFO - Ana klasör yolu: /Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/data
+2025-05-25 16:22:03,731 - INFO - 2025-01-16 dosyasından 113 veri çekildi
+2025-05-25 16:22:03,733 - INFO - Özellik çıkarma başlatıldı
+2025-05-25 16:22:08,177 - INFO - Toplam 120 özellik başarıyla çıkarıldı
+2025-05-25 16:22:08,177 - INFO - 2025-01-16 dosyasından özellikler çıkarıldı
+2025-05-25 16:22:08,184 - INFO - 120 özellik başarıyla işlendi
+2025-05-25 16:22:08,185 - INFO - Özellik listesi veritabanından alındı
+2025-05-25 16:22:08,437 - INFO - 113 döngü verisi formatlandı
+2025-05-25 16:22:08,438 - ERROR - Döngü 3286 eklenirken hata oluştu
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 106, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: no such table: cycles
+2025-05-25 16:22:08,439 - ERROR - Döngü verileri eklenirken hata oluştu
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 106, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: no such table: cycles
+2025-05-25 16:22:08,440 - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 106, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: no such table: cycles
+
+2025-05-25 16:22:08,440 - ERROR - Veri işleme sırasında hata oluştu
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/app.py", line 77, in <module>
+    insert_cycle_data(data_with_id, date)
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 106, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: no such table: cycles
+2025-05-25 16:22:46,510 - INFO - feature_list tablosu oluşturuldu
+2025-05-25 16:22:46,511 - INFO - feature_values tablosu oluşturuldu
+2025-05-25 16:22:46,511 - INFO - Test veritabanı başlatıldı
+2025-05-25 16:22:46,512 - INFO - 2025-01-16 tarihli veri işleme başlatıldı
+2025-05-25 16:22:46,512 - INFO - Ana klasör yolu: /Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/data
+2025-05-25 16:22:47,075 - INFO - 2025-01-16 dosyasından 113 veri çekildi
+2025-05-25 16:22:47,076 - INFO - Özellik çıkarma başlatıldı
+2025-05-25 16:22:51,496 - INFO - Toplam 120 özellik başarıyla çıkarıldı
+2025-05-25 16:22:51,496 - INFO - 2025-01-16 dosyasından özellikler çıkarıldı
+2025-05-25 16:22:51,503 - INFO - 120 özellik başarıyla işlendi
+2025-05-25 16:22:51,503 - INFO - Özellik listesi veritabanından alındı
+2025-05-25 16:22:51,753 - INFO - 113 döngü verisi formatlandı
+2025-05-25 16:22:51,754 - ERROR - Döngü 3286 eklenirken hata oluştu
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 123, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: table feature_values has no column named value
+2025-05-25 16:22:51,756 - ERROR - Döngü verileri eklenirken hata oluştu
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 123, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: table feature_values has no column named value
+2025-05-25 16:22:51,756 - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 123, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: table feature_values has no column named value
+
+2025-05-25 16:22:51,756 - ERROR - Veri işleme sırasında hata oluştu
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/app.py", line 77, in <module>
+    insert_cycle_data(data_with_id, date)
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 123, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: table feature_values has no column named value
+2025-05-25 16:23:35,242 - INFO - feature_list tablosu oluşturuldu
+2025-05-25 16:23:35,243 - INFO - feature_values tablosu oluşturuldu
+2025-05-25 16:23:35,243 - INFO - Test veritabanı başlatıldı
+2025-05-25 16:23:35,243 - INFO - 2025-01-16 tarihli veri işleme başlatıldı
+2025-05-25 16:23:35,243 - INFO - Ana klasör yolu: /Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/data
+2025-05-25 16:23:35,841 - INFO - 2025-01-16 dosyasından 113 veri çekildi
+2025-05-25 16:23:35,843 - INFO - Özellik çıkarma başlatıldı
+2025-05-25 16:23:40,264 - INFO - Toplam 120 özellik başarıyla çıkarıldı
+2025-05-25 16:23:40,264 - INFO - 2025-01-16 dosyasından özellikler çıkarıldı
+2025-05-25 16:23:40,271 - INFO - 120 özellik başarıyla işlendi
+2025-05-25 16:23:40,271 - INFO - Özellik listesi veritabanından alındı
+2025-05-25 16:23:40,595 - INFO - 113 döngü verisi formatlandı
+2025-05-25 16:23:40,636 - INFO - 113 döngü verisi başarıyla eklendi
+2025-05-25 16:23:40,636 - INFO - Veriler test veritabanına eklendi
+2025-05-25 16:23:40,636 - INFO - 2025-01-16 tarihli veri işleme başarıyla tamamlandı
+2025-05-25 16:24:41,630 - INFO - feature_list tablosu oluşturuldu
+2025-05-25 16:24:41,631 - INFO - feature_values tablosu oluşturuldu
+2025-05-25 16:24:41,632 - INFO - Test veritabanı başlatıldı
+2025-05-25 16:24:41,632 - INFO - 2025-01-16 tarihli veri işleme başlatıldı
+2025-05-25 16:24:41,632 - INFO - Ana klasör yolu: /Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/data
+2025-05-25 16:24:42,195 - INFO - 2025-01-16 dosyasından 113 veri çekildi
+2025-05-25 16:24:42,196 - INFO - Özellik çıkarma başlatıldı
+2025-05-25 16:24:46,590 - INFO - Toplam 120 özellik başarıyla çıkarıldı
+2025-05-25 16:24:46,591 - INFO - 2025-01-16 dosyasından özellikler çıkarıldı
+2025-05-25 16:24:46,598 - INFO - 120 özellik başarıyla işlendi
+2025-05-25 16:24:46,599 - INFO - Özellik listesi veritabanından alındı
+2025-05-25 16:24:46,848 - INFO - 113 döngü verisi formatlandı
+2025-05-25 16:24:46,889 - INFO - 113 döngü verisi başarıyla eklendi
+2025-05-25 16:24:46,889 - INFO - Veriler test veritabanına eklendi
+2025-05-25 16:24:46,889 - INFO - 2025-01-16 tarihli veri işleme başarıyla tamamlandı
+2025-05-25 16:26:36,081 - INFO - feature_list tablosu oluşturuldu
+2025-05-25 16:26:36,082 - INFO - feature_values tablosu oluşturuldu
+2025-05-25 16:26:36,083 - INFO - Test veritabanı başlatıldı
+2025-05-25 16:26:36,083 - INFO - 2025-01-16 tarihli veri işleme başlatıldı
+2025-05-25 16:26:36,083 - INFO - Ana klasör yolu: /Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/data
+2025-05-25 16:26:36,668 - INFO - 2025-01-16 dosyasından 113 veri çekildi
+2025-05-25 16:26:36,670 - INFO - Özellik çıkarma başlatıldı
+2025-05-25 16:26:41,100 - INFO - Toplam 120 özellik başarıyla çıkarıldı
+2025-05-25 16:26:41,100 - INFO - 2025-01-16 dosyasından özellikler çıkarıldı
+2025-05-25 16:26:41,106 - INFO - 120 özellik başarıyla işlendi
+2025-05-25 16:26:41,106 - INFO - Özellik listesi veritabanından alındı
+2025-05-25 16:26:41,356 - INFO - 113 döngü verisi formatlandı
+2025-05-25 16:26:41,396 - INFO - 113 döngü verisi başarıyla eklendi
+2025-05-25 16:26:41,396 - INFO - Veriler test veritabanına eklendi
+2025-05-25 16:26:41,396 - INFO - 2025-01-16 tarihli veri işleme başarıyla tamamlandı
+2025-05-25 16:27:05,440 - INFO - feature_list tablosu oluşturuldu
+2025-05-25 16:27:05,441 - INFO - feature_values tablosu oluşturuldu
+2025-05-25 16:27:05,441 - INFO - Test veritabanı başlatıldı
+2025-05-25 16:27:05,441 - INFO - 2025-01-16 tarihli veri işleme başlatıldı
+2025-05-25 16:27:05,441 - INFO - Ana klasör yolu: /Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/data
+2025-05-25 16:27:06,031 - INFO - 2025-01-16 dosyasından 113 veri çekildi
+2025-05-25 16:27:06,033 - INFO - Özellik çıkarma başlatıldı
+2025-05-25 16:27:10,482 - INFO - Toplam 120 özellik başarıyla çıkarıldı
+2025-05-25 16:27:10,483 - INFO - 2025-01-16 dosyasından özellikler çıkarıldı
+2025-05-25 16:27:10,490 - INFO - 120 özellik başarıyla işlendi
+2025-05-25 16:27:10,490 - INFO - Özellik listesi veritabanından alındı
+2025-05-25 16:27:10,788 - INFO - 113 döngü verisi formatlandı
+2025-05-25 16:27:10,789 - ERROR - Döngü 3286 eklenirken hata oluştu
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 114, in insert_cycle_data
+    cursor.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: cycles.id
+2025-05-25 16:27:10,791 - ERROR - Döngü verileri eklenirken hata oluştu
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 114, in insert_cycle_data
+    cursor.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: cycles.id
+2025-05-25 16:27:10,791 - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 114, in insert_cycle_data
+    cursor.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: cycles.id
+
+2025-05-25 16:27:10,791 - ERROR - Veri işleme sırasında hata oluştu
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/app.py", line 77, in <module>
+    insert_cycle_data(data_with_id, date)
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 114, in insert_cycle_data
+    cursor.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: cycles.id
+2025-05-25 16:30:02,661 - INFO - feature_list tablosu oluşturuldu
+2025-05-25 16:30:02,662 - INFO - feature_values tablosu oluşturuldu
+2025-05-25 16:30:02,662 - INFO - Test veritabanı başlatıldı
+2025-05-25 16:30:02,662 - INFO - 2025-01-16 tarihli veri işleme başlatıldı
+2025-05-25 16:30:02,662 - INFO - Ana klasör yolu: /Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/data
+2025-05-25 16:30:03,242 - INFO - 2025-01-16 dosyasından 113 veri çekildi
+2025-05-25 16:30:03,244 - INFO - Özellik çıkarma başlatıldı
+2025-05-25 16:30:07,613 - INFO - Toplam 120 özellik başarıyla çıkarıldı
+2025-05-25 16:30:07,613 - INFO - 2025-01-16 dosyasından özellikler çıkarıldı
+2025-05-25 16:30:07,620 - INFO - 120 özellik başarıyla işlendi
+2025-05-25 16:30:07,620 - INFO - Özellik listesi veritabanından alındı
+2025-05-25 16:30:07,870 - INFO - 113 döngü verisi formatlandı
+2025-05-25 16:30:07,875 - INFO - 113 döngü verisi başarıyla işlendi
+2025-05-25 16:30:07,875 - INFO - Veriler test veritabanına eklendi
+2025-05-25 16:30:07,875 - INFO - 2025-01-16 tarihli veri işleme başarıyla tamamlandı

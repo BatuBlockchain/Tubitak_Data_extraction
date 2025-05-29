@@ -1,0 +1,99 @@
+2025-05-25 16:21:07,726 - ERROR - Özellikler eklenirken hata oluştu
+(<class 'sqlite3.OperationalError'>, OperationalError('no such table: features'), <traceback object at 0x308588dc0>)
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 52, in insert_new_features
+    cursor.execute("INSERT INTO features (feature_name) VALUES (?)", (feature,))
+sqlite3.OperationalError: no such table: features
+2025-05-25 16:21:07,728 - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 52, in insert_new_features
+    cursor.execute("INSERT INTO features (feature_name) VALUES (?)", (feature,))
+sqlite3.OperationalError: no such table: features
+
+None
+2025-05-25 16:21:07,728 - ERROR - Veri işleme sırasında hata oluştu
+(<class 'sqlite3.OperationalError'>, OperationalError('no such table: features'), <traceback object at 0x1346dd2c0>)
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/app.py", line 69, in <module>
+    feature_list_db = insert_new_features(features_list)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 52, in insert_new_features
+    cursor.execute("INSERT INTO features (feature_name) VALUES (?)", (feature,))
+sqlite3.OperationalError: no such table: features
+2025-05-25 16:22:08,438 - ERROR - Döngü 3286 eklenirken hata oluştu
+(<class 'sqlite3.OperationalError'>, OperationalError('no such table: cycles'), <traceback object at 0x3036d8c80>)
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 106, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: no such table: cycles
+2025-05-25 16:22:08,439 - ERROR - Döngü verileri eklenirken hata oluştu
+(<class 'sqlite3.OperationalError'>, OperationalError('no such table: cycles'), <traceback object at 0x3036d8c80>)
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 106, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: no such table: cycles
+2025-05-25 16:22:08,440 - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 106, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: no such table: cycles
+
+None
+2025-05-25 16:22:08,440 - ERROR - Veri işleme sırasında hata oluştu
+(<class 'sqlite3.OperationalError'>, OperationalError('no such table: cycles'), <traceback object at 0x3143ab040>)
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/app.py", line 77, in <module>
+    insert_cycle_data(data_with_id, date)
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 106, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: no such table: cycles
+2025-05-25 16:22:51,754 - ERROR - Döngü 3286 eklenirken hata oluştu
+(<class 'sqlite3.OperationalError'>, OperationalError('table feature_values has no column named value'), <traceback object at 0x173f5cc40>)
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 123, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: table feature_values has no column named value
+2025-05-25 16:22:51,756 - ERROR - Döngü verileri eklenirken hata oluştu
+(<class 'sqlite3.OperationalError'>, OperationalError('table feature_values has no column named value'), <traceback object at 0x173f5cc40>)
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 123, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: table feature_values has no column named value
+2025-05-25 16:22:51,756 - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 123, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: table feature_values has no column named value
+
+None
+2025-05-25 16:22:51,756 - ERROR - Veri işleme sırasında hata oluştu
+(<class 'sqlite3.OperationalError'>, OperationalError('table feature_values has no column named value'), <traceback object at 0x173f5cc80>)
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/app.py", line 77, in <module>
+    insert_cycle_data(data_with_id, date)
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 123, in insert_cycle_data
+    cursor.execute(
+sqlite3.OperationalError: table feature_values has no column named value
+2025-05-25 16:27:10,789 - ERROR - Döngü 3286 eklenirken hata oluştu
+(<class 'sqlite3.IntegrityError'>, IntegrityError('UNIQUE constraint failed: cycles.id'), <traceback object at 0x174c6cbc0>)
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 114, in insert_cycle_data
+    cursor.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: cycles.id
+2025-05-25 16:27:10,791 - ERROR - Döngü verileri eklenirken hata oluştu
+(<class 'sqlite3.IntegrityError'>, IntegrityError('UNIQUE constraint failed: cycles.id'), <traceback object at 0x174c6cbc0>)
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 114, in insert_cycle_data
+    cursor.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: cycles.id
+2025-05-25 16:27:10,791 - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 114, in insert_cycle_data
+    cursor.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: cycles.id
+
+None
+2025-05-25 16:27:10,791 - ERROR - Veri işleme sırasında hata oluştu
+(<class 'sqlite3.IntegrityError'>, IntegrityError('UNIQUE constraint failed: cycles.id'), <traceback object at 0x174c6ce00>)
+Traceback (most recent call last):
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/app.py", line 77, in <module>
+    insert_cycle_data(data_with_id, date)
+  File "/Users/batuhanunal/Desktop/Codes/Tubitak_Data_Extraction/scripts/db_functions_test.py", line 114, in insert_cycle_data
+    cursor.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: cycles.id
