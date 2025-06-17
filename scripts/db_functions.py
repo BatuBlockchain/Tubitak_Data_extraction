@@ -14,16 +14,18 @@ def insert_new_features(features_list: list):
     """Yeni özellikleri veritabanına ekler"""
     try:
         # check if the feature list is already in the database
-        feature_list_db = execute_query(f"SELECT id,feature_name FROM feature_list", fetch=True)
+        feature_list_db = execute_query(f"SELECT FEATURE_ID,FEATURE_NAME FROM FEATURES_LOOKUP", fetch=True)
         logger.info("Mevcut özellik listesi veritabanından alındı")
 
         # new features
-        new_features = [feature for feature in features_list if feature not in feature_list_db['feature_name'].values]
+        new_features = [feature for feature in features_list if feature not in feature_list_db['FEATURE_NAME'].values]
         
         # insert new features
         for feature in new_features:
             try:
-                execute_query(f"INSERT INTO feature_list (feature_name) VALUES ('{feature}')")
+                max_feature_id = execute_query("SELECT MAX(FEATURE_ID) as max_id FROM FEATURES_LOOKUP", fetch=True)['max_id'].iloc[0]
+                new_feature_id = 1 if pd.isna(max_feature_id) else max_feature_id + 1
+                execute_query(f"INSERT INTO FEATURES_LOOKUP (FEATURE_ID,FEATURE_NAME) VALUES (?,?)",(int(new_feature_id),feature))
                 logger.debug(f"Yeni özellik eklendi: {feature}")
             except Exception as e:
                 logger.error(f"Özellik eklenirken hata oluştu: {feature}", e)
@@ -31,7 +33,7 @@ def insert_new_features(features_list: list):
 
         if len(new_features) > 0:
             logger.info(f"Yeni özellikler eklendi: {new_features}")
-            feature_list_db = execute_query(f"SELECT id,feature_name FROM feature_list", fetch=True)
+            feature_list_db = execute_query(f"SELECT FEATURE_ID,FEATURE_NAME FROM FEATURES_LOOKUP", fetch=True)
         
         return feature_list_db
     except Exception as e:
@@ -46,12 +48,12 @@ def format_data_with_id(features: pd.DataFrame, feature_list_db: pd.DataFrame):
         for index, row in features.iterrows():
             for feature in features.columns:
                 try:
-                    feature_id = feature_list_db[feature_list_db['feature_name'] == feature].id.values[0]
-                    data_with_id = data_with_id.append({
-                        'cycle_id': features.index[index],
-                        'feature_id': feature_id,
-                        'feature_value': row[feature]
-                    }, ignore_index=True)
+                    feature_id = feature_list_db[feature_list_db['FEATURE_NAME'] == feature].FEATURE_ID.values[0]
+                    data_with_id = pd.concat([data_with_id, pd.DataFrame({
+                        'CYCLE_ID': [int(index)],
+                        'FEATURE_ID': [int(feature_id)],
+                        'FEATURE_VALUE': [float(row[feature])]
+                    })], ignore_index=True)
                 except IndexError as e:
                     logger.error(f"Özellik ID'si bulunamadı: {feature}", e)
                     raise
@@ -76,25 +78,25 @@ def insert_feature_values(data_with_id: pd.DataFrame, station_id: int, batch_siz
                 batch = data_with_id.iloc[i:i+batch_size]
                 
                 # Mevcut değerleri toplu olarak kontrol et
-                cycle_ids = tuple(batch['cycle_id'].unique())
-                feature_ids = tuple(batch['feature_id'].unique())
+                cycle_ids = tuple(int(x) for x in batch['CYCLE_ID'].unique())
+                feature_ids = tuple(int(x) for x in batch['FEATURE_ID'].unique())
                 
                 existing_values = execute_query(
                     """
-                    SELECT id, cycle_id, feature_id, feature_value, extractor_version
-                    FROM feature_values 
-                    WHERE cycle_id IN ({}) AND feature_id IN ({}) AND station_id = ?
+                    SELECT ID, CYCLE_ID, FEATURE_ID, STATION_ID, FEATURE_VALUE, EXTRACTOR_VERSION
+                    FROM EXTRACTED_FEATURES 
+                    WHERE CYCLE_ID IN ({}) AND FEATURE_ID IN ({}) AND STATION_ID = ?
                     """.format(
                         ','.join(['?'] * len(cycle_ids)),
                         ','.join(['?'] * len(feature_ids))
                     ),
-                    (*cycle_ids, *feature_ids, station_id),
+                    (*cycle_ids, *feature_ids, int(station_id)),
                     fetch=True
                 )
                 
                 # Mevcut değerleri dictionary'ye dönüştür
                 existing_dict = {
-                    (row['cycle_id'], row['feature_id']): (row['id'], row['feature_value'], row['extractor_version'])
+                    (int(row['CYCLE_ID']), int(row['FEATURE_ID']),int(row['STATION_ID'])): (row['ID'], row['FEATURE_VALUE'], row['EXTRACTOR_VERSION'])
                     for _, row in existing_values.iterrows()
                 }
                 
@@ -103,20 +105,20 @@ def insert_feature_values(data_with_id: pd.DataFrame, station_id: int, batch_siz
                 to_update = []
                 
                 for _, row in batch.iterrows():
-                    key = (row['cycle_id'], row['feature_id'])
+                    key = (int(row['CYCLE_ID']), int(row['FEATURE_ID']),int(station_id))
                     if key not in existing_dict:
                         to_insert.append((
-                            row['cycle_id'],
-                            row['feature_id'],
-                            row['feature_value'],
-                            station_id,
+                            int(row['CYCLE_ID']),
+                            int(row['FEATURE_ID']),
+                            float(row['FEATURE_VALUE']),
+                            int(station_id),
                             extractor_version
                         ))
                     else:
                         existing_id, existing_value, existing_version = existing_dict[key]
-                        if existing_value != row['feature_value'] or existing_version != extractor_version:
+                        if existing_value != row['FEATURE_VALUE'] or existing_version != extractor_version:
                             to_update.append((
-                                row['feature_value'],
+                                float(row['FEATURE_VALUE']),
                                 extractor_version,
                                 existing_id
                             ))
@@ -125,7 +127,7 @@ def insert_feature_values(data_with_id: pd.DataFrame, station_id: int, batch_siz
                 if to_insert:
                     execute_query(
                         """
-                        INSERT INTO feature_values (cycle_id, feature_id, feature_value, station_id, extractor_version)
+                        INSERT INTO EXTRACTED_FEATURES (CYCLE_ID, FEATURE_ID, FEATURE_VALUE, STATION_ID, EXTRACTOR_VERSION)
                         VALUES (?, ?, ?, ?, ?)
                         """,
                         to_insert,
@@ -137,9 +139,9 @@ def insert_feature_values(data_with_id: pd.DataFrame, station_id: int, batch_siz
                 if to_update:
                     execute_query(
                         """
-                        UPDATE feature_values 
-                        SET feature_value = ?, extractor_version = ?
-                        WHERE id = ?
+                        UPDATE EXTRACTED_FEATURES 
+                        SET FEATURE_VALUE = ?, EXTRACTOR_VERSION = ?
+                        WHERE ID = ?
                         """,
                         to_update,
                         many=True
@@ -165,7 +167,7 @@ def get_station_profile():
         station_profile.columns: ['NAME', 'ID', 'CREATED_AT']
     """
     try:
-        station_profile = execute_query(f"SELECT NAME, ID, CREATED_AT FROM station_profile", fetch=True)
+        station_profile = execute_query(f"SELECT NAME, ID, CREATED_AT FROM STATION_PROFILE", fetch=True)
         return station_profile
     except Exception as e:
         logger.error("Station profile'ı alırken hata oluştu", e)
