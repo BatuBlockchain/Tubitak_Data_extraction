@@ -7,6 +7,8 @@ import time
 from typing import Optional, Any
 import traceback
 from scripts.logger import Logger
+from sqlalchemy import create_engine, text
+import urllib.parse
 
 # Logger'ı başlat
 logger = Logger()
@@ -97,7 +99,7 @@ def handle_database_error(error: pyodbc.Error) -> tuple[str, Optional[int], Opti
         logger.error(f"Traceback: {traceback.format_exc()}")
         return "Beklenmeyen bir hata oluştu", None, str(e)
 
-def execute_query(query: str, params: Optional[Any] = None, fetch: bool = False, max_retries: int = 3, retry_delay: int = 1):
+def execute_query(query: str, params: Optional[Any] = None, fetch: bool = False, many: bool = False, max_retries: int = 3, retry_delay: int = 1):
     """
     SQL sorgusunu çalıştırır, bağlantı hatası durumunda yeniden dener
     
@@ -105,6 +107,7 @@ def execute_query(query: str, params: Optional[Any] = None, fetch: bool = False,
         query (str): SQL sorgusu
         params (tuple/list, optional): Sorgu parametreleri
         fetch (bool): True ise sonuçları döndürür, False ise sadece sorguyu çalıştırır
+        many (bool): True ise çoklu kayıt işlemi (executemany kullanır)
         max_retries (int): Maksimum yeniden deneme sayısı
         retry_delay (int): Yeniden denemeler arasındaki bekleme süresi (saniye)
     
@@ -127,7 +130,10 @@ def execute_query(query: str, params: Optional[Any] = None, fetch: bool = False,
             else:
                 cursor = conn.cursor()
                 if params:
-                    cursor.execute(query, params)
+                    if many:
+                        cursor.executemany(query, params)
+                    else:
+                        cursor.execute(query, params)
                 else:
                     cursor.execute(query)
                 conn.commit()
@@ -144,27 +150,67 @@ def execute_query(query: str, params: Optional[Any] = None, fetch: bool = False,
 
         while retry_count < max_retries:
             try:
-                conn = pyodbc.connect(
+                connection_string = (
                     f"DRIVER={{ODBC Driver 17 for SQL Server}};"
                     f"SERVER={os.getenv('DB_SERVER')};"
                     f"DATABASE={os.getenv('DB_NAME')};"
                     f"UID={os.getenv('DB_USER')};"
                     f"PWD={os.getenv('DB_PASSWORD')}"
                 )
+                engine = create_engine(f"mssql+pyodbc:///?odbc_connect={urllib.parse.quote_plus(connection_string)}")
                 
                 if fetch:
-                    df = pd.read_sql(query, conn, params=params)
-                    conn.close()
+                    # Fetch işlemi için pandas ile SQLAlchemy engine kullan
+                    if params:
+                        # Parametreleri dictionary formatına çevir
+                        if isinstance(params, (tuple, list)):
+                            # ? placeholder'larını :param1, :param2 şeklinde değiştir
+                            param_dict = {}
+                            modified_query = query
+                            for i, param in enumerate(params):
+                                param_name = f"param{i+1}"
+                                param_dict[param_name] = param
+                                modified_query = modified_query.replace('?', f':{param_name}', 1)
+                            df = pd.read_sql(text(modified_query), engine, params=param_dict)
+                        else:
+                            df = pd.read_sql(text(query), engine, params=params)
+                    else:
+                        df = pd.read_sql(text(query), engine)
                     return df
                 else:
-                    cursor = conn.cursor()
-                    if params:
-                        cursor.execute(query, params)
-                    else:
-                        cursor.execute(query)
-                    conn.commit()
-                    cursor.close()
-                    conn.close()
+                    # Insert/Update işlemleri için SQLAlchemy connection kullan
+                    with engine.connect() as conn:
+                        if params:
+                            if many:
+                                # Çoklu kayıt işlemi
+                                for param_set in params:
+                                    if isinstance(param_set, (tuple, list)):
+                                        # ? placeholder'larını :param1, :param2 şeklinde değiştir
+                                        param_dict = {}
+                                        modified_query = query
+                                        for i, param in enumerate(param_set):
+                                            param_name = f"param{i+1}"
+                                            param_dict[param_name] = param
+                                            modified_query = modified_query.replace('?', f':{param_name}', 1)
+                                        conn.execute(text(modified_query), param_dict)
+                                    else:
+                                        conn.execute(text(query), param_set)
+                            else:
+                                # Tek kayıt işlemi
+                                if isinstance(params, (tuple, list)):
+                                    # ? placeholder'larını :param1, :param2 şeklinde değiştir
+                                    param_dict = {}
+                                    modified_query = query
+                                    for i, param in enumerate(params):
+                                        param_name = f"param{i+1}"
+                                        param_dict[param_name] = param
+                                        modified_query = modified_query.replace('?', f':{param_name}', 1)
+                                    conn.execute(text(modified_query), param_dict)
+                                else:
+                                    conn.execute(text(query), params)
+                        else:
+                            conn.execute(text(query))
+                        conn.commit()
                     return True
                     
             except pyodbc.Error as e:
