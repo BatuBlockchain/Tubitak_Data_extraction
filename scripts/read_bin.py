@@ -9,9 +9,9 @@ from scripts.logger import Logger
 # Logger'ı başlat
 logger = Logger()
 
-def data_extraction(data_folder_direction,main_folder_path='data'):
+def data_extraction(data_folder_direction,station_id):
     merged_data = defaultdict(lambda: defaultdict(list))
-
+    main_folder_path = os.path.join(os.getenv('path'),str(station_id))
     for root, dirs, files in os.walk(os.path.join(main_folder_path,data_folder_direction)):
         for file_name in files:
             if file_name.endswith(".bin"):
