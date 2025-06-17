@@ -1,7 +1,7 @@
 from scripts.db_connection import execute_query
 from scripts.read_bin import data_extraction
 from scripts.feature_extraction import feature_extraction
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 from dotenv import load_dotenv
 import sys
@@ -125,6 +125,8 @@ if __name__ == "__main__":
             today = datetime.now().strftime("%Y-%m-%d")
             dates = pd.DataFrame(columns=['station_id', 'date'])
             dates = pd.concat([dates, pd.DataFrame([{'station_id': str(station['ID']), 'date': today} for _, station in station_profile.iterrows()])], ignore_index=True)
+            yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+            dates = pd.concat([dates, pd.DataFrame([{'station_id': str(station['ID']), 'date': yesterday} for _, station in station_profile.iterrows()])], ignore_index=True)
 
         for index, row in dates.iterrows():
             logger.info(f"{row['date']} tarihli veri işleme başlatıldı")
