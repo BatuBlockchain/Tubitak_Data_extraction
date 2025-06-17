@@ -11,3 +11,6 @@ data/
 .vscode/
 db.config
 test.db
+progress.json
+logs/
+**__pycache__/
